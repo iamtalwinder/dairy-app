@@ -1,7 +1,6 @@
-import DairyCreated from "@/components/createdDairy/created-dairy";
 import { Text, View } from "react-native";
 
-export default function Home() {
+export default function CreateDairy() {
   return (
     <View
       style={{
@@ -10,8 +9,7 @@ export default function Home() {
         alignItems: "center",
       }}
     >
-      <DairyCreated />
+      <Text>Create your new Dairy</Text>
     </View>
   );
 }
-
