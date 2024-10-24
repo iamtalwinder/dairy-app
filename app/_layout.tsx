@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from 'react-native';
-import { IconButton, MD3Colors } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();

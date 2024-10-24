@@ -1,5 +1,5 @@
-import DairyCreated from "@/components/createdDairy/created-dairy";
-import { Text, View } from "react-native";
+import DairyCreated from "@/components/createdDairyList/created-dairy-list";
+import { View } from "react-native";
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-      }}
+      }}  
     >
       <DairyCreated />
     </View>
