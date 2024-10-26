@@ -5,14 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 
 interface HeaderProps {
   title: string;
-  showBackButton?: boolean; 
+  showBackButton?: boolean;
   onSavePress?: () => void;
-  saveButtonText?: string; 
+  saveButtonText?: string;
 }
 
 export default function Header({
   title,
-  showBackButton = true, 
+  showBackButton = true,
   onSavePress,
   saveButtonText = 'Save',
 }: HeaderProps) {
@@ -51,7 +51,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   saveButton: {
-    fontSize: 16,
-    color: 'blue',
+    fontSize: 14,
+    padding: 6,
+    paddingRight: 10,
+    paddingLeft: 10,
+    borderRadius: 8,
+    color: 'white',
+    backgroundColor: '#0A84FF'
   },
 });

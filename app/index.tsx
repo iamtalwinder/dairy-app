@@ -1,3 +1,4 @@
+import React from "react";
 import DairyCreated from "@/components/createdDairyList/created-dairy-list";
 import { View } from "react-native";
 

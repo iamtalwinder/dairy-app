@@ -4,9 +4,9 @@ import { Text } from 'react-native-paper';
 
 const { width, height } = Dimensions.get('window');
 
-const titles = ['First Entry', 'Second Entry', 'Third Entry', 'Fourth Entry', 'Fifth Entry'];
+const titles = ['First Entry', 'Second Entry', 'Third Entry'];
 
-const DairyData = Array.from({ length: 5 }, (_, index) => {
+const DairyData = Array.from({ length: 3 }, (_, index) => {
   const currentTime = new Date().toLocaleString('en-US', {
     day: '2-digit',
     month: 'short',
@@ -44,8 +44,6 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     borderRadius: 16,
-    // backgroundColor: '#E3F2FD',
-    // elevation: 3,
     overflow: 'hidden'
   },
   yearText: {
