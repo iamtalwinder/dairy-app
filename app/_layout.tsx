@@ -5,58 +5,61 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from 'react-native';
 import { IconButton } from 'react-native-paper';
+import { DiaryProvider } from '@/context/DairyContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        headerStyle: { marginTop: 5, padding: 5 }
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Dairy',
-          tabBarIcon: ({ color, focused }) => (
+    <DiaryProvider>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+          headerShown: false,
+          headerStyle: { marginTop: 5, padding: 5 }
+        }}>
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Dairy',
+            tabBarIcon: ({ color, focused }) => (
 
-            <TabBarIcon name={focused ? 'book' : 'book-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="createDairy"
-        options={{
-          title: '',
-          tabBarIcon: ({ color, focused }) => (
-            <View style={styles.iconWrapper}>
-              <View style={styles.iconContainer}>
-                <IconButton
-                  icon={focused ? 'plus-circle' : 'plus-circle-outline'}
-                  iconColor={color}
-                  size={30}
-                />
+              <TabBarIcon name={focused ? 'book' : 'book-outline'} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="createDairy"
+          options={{
+            title: '',
+            tabBarIcon: ({ color, focused }) => (
+              <View style={styles.iconWrapper}>
+                <View style={styles.iconContainer}>
+                  <IconButton
+                    icon={focused ? 'plus-circle' : 'plus-circle-outline'}
+                    iconColor={color}
+                    size={30}
+                  />
+                </View>
               </View>
-            </View>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="calender"
-        options={{
-          title: 'Calender',
-          tabBarIcon: ({ color, focused }) => (
-            <IconButton
-              icon={focused ? 'calendar' : 'calendar-outline'}
-              iconColor={color}
-              size={30}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="calender"
+          options={{
+            title: 'Calender',
+            tabBarIcon: ({ color, focused }) => (
+              <IconButton
+                icon={focused ? 'calendar' : 'calendar-outline'}
+                iconColor={color}
+                size={30}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+    </DiaryProvider>
   );
 }
 

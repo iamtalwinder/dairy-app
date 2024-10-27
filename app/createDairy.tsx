@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Alert, TextInput } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Header from "@/components/header/header";
 import { Ionicons } from '@expo/vector-icons';
+import { DiaryContext } from "@/context/DairyContext";
 
-export default function CreateDairy() {
-  const [date, setDate] = useState(new Date());
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
-  const [title, setTitle] = useState('');
-  const [moreContent, setMoreContent] = useState('');
+const CreateDairy: React.FC = () => {
+  const diaryContext = useContext(DiaryContext);
 
+  if (!diaryContext) {
+    throw new Error("DiaryContext is undefined, please check the provider.");
+  }
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
+  const { addEntry } = diaryContext;
+  const [date, setDate] = useState<Date>(new Date());
+  const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(false);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
+  const [moreContent, setMoreContent] = useState<string>('');
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+  const showDatePicker = () => setDatePickerVisibility(true);
+  const hideDatePicker = () => setDatePickerVisibility(false);
 
   const handleDateConfirm = (selectedDate: Date) => {
     hideDatePicker();
@@ -26,13 +28,8 @@ export default function CreateDairy() {
     showTimePicker();
   };
 
-  const showTimePicker = () => {
-    setTimePickerVisibility(true);
-  };
-
-  const hideTimePicker = () => {
-    setTimePickerVisibility(false);
-  };
+  const showTimePicker = () => setTimePickerVisibility(true);
+  const hideTimePicker = () => setTimePickerVisibility(false);
 
   const handleTimeConfirm = (selectedTime: Date) => {
     hideTimePicker();
@@ -44,10 +41,17 @@ export default function CreateDairy() {
   };
 
   const handleSave = () => {
-    alert("Dairy saved with timestamp: " + date.toLocaleString());
+    addEntry({
+      title: title || "Untitled Entry",
+      timeStamp: date.toLocaleString(),
+      content: moreContent,
+    });
+    setTitle('');
+    setMoreContent('');
+    Alert.alert("Dairy saved!", "Your entry has been saved successfully.");
   };
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: Date): string => {
     const day = date.getDate();
     const year = date.getFullYear();
     const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(date);
@@ -61,28 +65,24 @@ export default function CreateDairy() {
       <View style={styles.container}>
         <TouchableOpacity style={styles.dropdown} onPress={showDatePicker}>
           <Text style={styles.dropdownText}>
-            {formatDate(date)} , {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-            <Ionicons name="chevron-down" size={20} color="black" style={{ marginTop: 10 }} />
+            {formatDate(date)}, {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
           </Text>
+          <Ionicons name="chevron-down" size={20} color="black" style={{ marginTop: 10 }} />
         </TouchableOpacity>
-        <View>
-          <TextInput
-            style={styles.input}
-            placeholder="Title"
-            value={title}
-            onChangeText={setTitle}
-            placeholderTextColor="#999"
-          />
-        </View>
-        <View>
-          <TextInput
-            style={styles.input}
-            placeholder="Write more here...."
-            value={moreContent}
-            onChangeText={setMoreContent}
-            placeholderTextColor="#999"
-          />
-        </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Title"
+          value={title}
+          onChangeText={setTitle}
+          placeholderTextColor="#999"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Write more here...."
+          value={moreContent}
+          onChangeText={setMoreContent}
+          placeholderTextColor="#999"
+        />
       </View>
 
       <DateTimePickerModal
@@ -100,28 +100,13 @@ export default function CreateDairy() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-  },
-  dropdown: {
-    padding: 10,
-    backgroundColor: "#f0f0f0",
-  },
-  dropdownText: {
-    fontSize: 16,
-  },
-  icon: {
-    paddingTop: 5,
-    marginLeft: 10,
-  },
-  input: {
-    fontSize: 18,
-    padding: 10,
-    borderBottomWidth: 0,
-    color: '#000',
-  },
+  container: { flex: 1, marginTop: 20 },
+  dropdown: { padding: 10, backgroundColor: "#f0f0f0" },
+  dropdownText: { fontSize: 16 },
+  input: { fontSize: 18, padding: 10, color: '#000' },
 });
+
+export default CreateDairy;

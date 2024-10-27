@@ -1,23 +1,19 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View, Dimensions } from 'react-native';
 import { Text } from 'react-native-paper';
+import { useContext } from 'react';
+import { DiaryContext } from '@/context/DairyContext';
 
 const { width, height } = Dimensions.get('window');
 
-const titles = ['First Entry', 'Second Entry', 'Third Entry'];
+const DiaryCreated: React.FC = () => {
+  const diaryContext = useContext(DiaryContext);
 
-const DairyData = Array.from({ length: 3 }, (_, index) => {
-  const currentTime = new Date().toLocaleString('en-US', {
-    day: '2-digit',
-    month: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  });
-  return { title: titles[index], timeStamp: currentTime };
-});
+  if (!diaryContext) {
+    throw new Error("DiaryContext is undefined, please check the provider.");
+  }
 
-const DiaryCreated = () => {
+  const { diaryEntries } = diaryContext;
   const currentYear = new Date().getFullYear();
 
   return (
@@ -25,12 +21,16 @@ const DiaryCreated = () => {
       <ScrollView>
         <View style={styles.parentContainer}>
           <Text style={styles.yearText}>{currentYear}</Text>
-          {DairyData.map((entry, index) => (
-            <View key={index} style={styles.dateContainer}>
-              <Text style={styles.titleText}>{entry.title}</Text>
-              <Text style={styles.dateText}>{entry.timeStamp}</Text>
-            </View>
-          ))}
+          {diaryEntries.length > 0 ? (
+            diaryEntries.map((entry, index) => (
+              <View key={index} style={styles.dateContainer}>
+                <Text style={styles.titleText}>{entry.title}</Text>
+                <Text style={styles.dateText}>{entry.timeStamp}</Text>
+              </View>
+            ))
+          ) : (
+            <Text style={styles.noEntriesText}>No entries available</Text>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     borderRadius: 16,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   yearText: {
     fontSize: 14,
@@ -68,8 +68,14 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 16,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
+  noEntriesText: {
+    fontSize: 16,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    color: '#888',
+  },
 });
 
 export default DiaryCreated;
