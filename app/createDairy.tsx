@@ -4,6 +4,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Header from "@/components/header/header";
 import { Ionicons } from '@expo/vector-icons';
 import { DiaryContext } from "@/context/DairyContext";
+import { useNavigation } from "@react-navigation/native";
 
 const CreateDairy: React.FC = () => {
   const diaryContext = useContext(DiaryContext);
@@ -18,6 +19,7 @@ const CreateDairy: React.FC = () => {
   const [isTimePickerVisible, setTimePickerVisibility] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [moreContent, setMoreContent] = useState<string>('');
+  const navigation = useNavigation();
 
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
@@ -38,6 +40,7 @@ const CreateDairy: React.FC = () => {
     updatedDate.setMinutes(selectedTime.getMinutes());
     setDate(updatedDate);
     Alert.alert("Timestamp updated!", `New Date: ${updatedDate.toLocaleString()}`);
+    navigation.goBack(); 
   };
 
   const handleSave = () => {
@@ -60,14 +63,14 @@ const CreateDairy: React.FC = () => {
 
   return (
     <View style={{ flex: 1, marginTop: 25 }}>
-      <Header title="Create Dairy" onSavePress={handleSave} saveButtonText="Save" />
+      <Header onSavePress={handleSave} saveButtonText="Save" />
 
       <View style={styles.container}>
         <TouchableOpacity style={styles.dropdown} onPress={showDatePicker}>
           <Text style={styles.dropdownText}>
             {formatDate(date)}, {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-          </Text>
           <Ionicons name="chevron-down" size={20} color="black" style={{ marginTop: 10 }} />
+          </Text>
         </TouchableOpacity>
         <TextInput
           style={styles.input}
@@ -105,7 +108,7 @@ const CreateDairy: React.FC = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, marginTop: 20 },
   dropdown: { padding: 10, backgroundColor: "#f0f0f0" },
-  dropdownText: { fontSize: 16 },
+  dropdownText: { fontSize: 16,display: 'flex' },
   input: { fontSize: 18, padding: 10, color: '#000' },
 });
 

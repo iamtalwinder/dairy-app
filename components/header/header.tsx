@@ -4,17 +4,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 interface HeaderProps {
-  title: string;
   showBackButton?: boolean;
   onSavePress?: () => void;
   saveButtonText?: string;
+  onListPress?: () => void;
 }
 
 export default function Header({
-  title,
   showBackButton = true,
   onSavePress,
   saveButtonText = 'Save',
+  onListPress
 }: HeaderProps) {
   const navigation = useNavigation();
 
@@ -25,12 +25,16 @@ export default function Header({
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
       )}
-      <Text style={styles.title}>{title}</Text>
-      {onSavePress && (
-        <TouchableOpacity onPress={onSavePress}>
-          <Text style={styles.saveButton}>{saveButtonText}</Text>
+      <View style={styles.buttons}>
+        <TouchableOpacity onPress={onListPress}>
+          <Ionicons name="document-text" size={28} color="black" style={styles.documentIcon} />
         </TouchableOpacity>
-      )}
+        {onSavePress && (
+          <TouchableOpacity onPress={onSavePress}>
+            <Text style={styles.saveButton}>{saveButtonText}</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 }
@@ -43,8 +47,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     backgroundColor: '#f5f5f5',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
   },
   title: {
     fontSize: 18,
@@ -59,4 +61,15 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: '#0A84FF'
   },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    display: 'flex',
+    alignItems: 'center',
+    paddingVertical: 8,
+    backgroundColor: '#f5f5f5',
+  },
+  documentIcon :{
+    marginRight: 10
+  }
 });

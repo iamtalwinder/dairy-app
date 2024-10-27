@@ -21,7 +21,7 @@ export const DiaryProvider: React.FC<DiaryProviderProps> = ({ children }) => {
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
 
   const addEntry = (entry: DiaryEntry) => {
-    setDiaryEntries([...diaryEntries, entry]);
+    setDiaryEntries((prevEntries) => [...prevEntries, entry]);
   };
 
   return (
