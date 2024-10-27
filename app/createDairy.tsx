@@ -40,7 +40,7 @@ const CreateDairy: React.FC = () => {
     updatedDate.setMinutes(selectedTime.getMinutes());
     setDate(updatedDate);
     Alert.alert("Timestamp updated!", `New Date: ${updatedDate.toLocaleString()}`);
-    navigation.goBack(); 
+    navigation.goBack();
   };
 
   const handleSave = () => {
@@ -49,9 +49,10 @@ const CreateDairy: React.FC = () => {
       timeStamp: date.toLocaleString(),
       content: moreContent,
     });
+
     setTitle('');
     setMoreContent('');
-    Alert.alert("Dairy saved!", "Your entry has been saved successfully.");
+    navigation.goBack();
   };
 
   const formatDate = (date: Date): string => {
@@ -69,7 +70,7 @@ const CreateDairy: React.FC = () => {
         <TouchableOpacity style={styles.dropdown} onPress={showDatePicker}>
           <Text style={styles.dropdownText}>
             {formatDate(date)}, {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-          <Ionicons name="chevron-down" size={20} color="black" style={{ marginTop: 10 }} />
+            <Ionicons name="chevron-down" size={20} color="black" style={{ marginTop: 10 }} />
           </Text>
         </TouchableOpacity>
         <TextInput
@@ -108,7 +109,7 @@ const CreateDairy: React.FC = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, marginTop: 20 },
   dropdown: { padding: 10, backgroundColor: "#f0f0f0" },
-  dropdownText: { fontSize: 16,display: 'flex' },
+  dropdownText: { fontSize: 16, display: 'flex' },
   input: { fontSize: 18, padding: 10, color: '#000' },
 });
 
