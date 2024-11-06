@@ -2,21 +2,22 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { DiaryEntryDetailsScreenNavigationProp } from '@/types';
 
 interface HeaderProps {
   showBackButton?: boolean;
   onSavePress?: () => void;
   saveButtonText?: string;
-  onListPress?: () => void;
+  onViewDetailPress?: () => void;
 }
 
 export default function Header({
   showBackButton = true,
   onSavePress,
   saveButtonText = 'Save',
-  onListPress
+  onViewDetailPress,
 }: HeaderProps) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<DiaryEntryDetailsScreenNavigationProp>();
 
   return (
     <View style={styles.headerContainer}>
@@ -26,7 +27,7 @@ export default function Header({
         </TouchableOpacity>
       )}
       <View style={styles.buttons}>
-        <TouchableOpacity onPress={onListPress}>
+        <TouchableOpacity onPress={onViewDetailPress}>
           <Ionicons name="document-text" size={28} color="black" style={styles.documentIcon} />
         </TouchableOpacity>
         {onSavePress && (
@@ -48,10 +49,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: '#f5f5f5',
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
   saveButton: {
     fontSize: 14,
     padding: 6,
@@ -59,17 +56,15 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 8,
     color: 'white',
-    backgroundColor: '#0A84FF'
+    backgroundColor: '#0A84FF',
   },
   buttons: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    display: 'flex',
     alignItems: 'center',
     paddingVertical: 8,
     backgroundColor: '#f5f5f5',
   },
-  documentIcon :{
-    marginRight: 10
-  }
+  documentIcon: {
+    marginRight: 10,
+  },
 });

@@ -44,14 +44,16 @@ const CreateDairy: React.FC = () => {
   };
 
   const handleSave = () => {
-    addEntry({
+    const entry = {
       title: title || "Untitled Entry",
-      timeStamp: date.toLocaleString(),
+      timeStamp: new Date().toLocaleString(),
       content: moreContent,
-    });
+    };
 
+    addEntry(entry);
     setTitle('');
     setMoreContent('');
+
     navigation.goBack();
   };
 
